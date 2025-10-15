@@ -96,13 +96,13 @@ class ArticleAttachmentUploadView(APIView):
         attachment = ArticleFileAttachment.objects.create(file=uploaded_file)
 
         return Response({
-            # "errorMessage": "",
+            "errorMessage": "",
             "result": [
                 {
                     # "id": attachment.id,
                     "url": attachment.file.url,
                     "name": os.path.basename(attachment.file.name),
-                    "size": attachment.file.size,
+                    "size": f"{attachment.file.size}",
                 }
             ]
         }, status=status.HTTP_201_CREATED)
