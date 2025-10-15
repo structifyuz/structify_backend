@@ -40,7 +40,7 @@ urlpatterns = [
     # Обслуживание защищенных файлов (должен поддерживать GET, но не вмешиваться в POST админки)
     path('protected-file/<path:file_path>/', serve_protected_file, name='serve_protected_file'),
     # Отчеты
-    path('articles/upload/', ArticleAttachmentUploadView.as_view(), name='articles_upload'),
+    path('file/upload/', ArticleAttachmentUploadView.as_view(), name='file_upload'),
     path('reports/articles/', ArticlesReportJSON.as_view(), name='articles_report_json'),
     path('reports/articles.csv', ArticlesReportCSV.as_view(), name='articles_report_csv'),
 ]
