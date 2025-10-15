@@ -66,9 +66,8 @@ def article_upload_to(instance, filename: str) -> str:
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
-    content = RichTextField()  # Используем CKEditor для форматированного текста
+    content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=article_upload_to, null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles"
     )
@@ -77,3 +76,15 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class ArticleFileAttachment(models.Model):
+    file = models.FileField(upload_to='article_attachments/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    used = models.BooleanField(default=False)
+
+    def delete(self, *args, **kwargs):
+        storage = self.file.storage
+        path = self.file.path
+        super().delete(*args, **kwargs)
+        if storage.exists(path):
+            storage.delete(path)

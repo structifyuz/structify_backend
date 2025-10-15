@@ -15,7 +15,7 @@ from myapp.views import (
     CategoryViewSet,
     ArticlesReportJSON,
     ArticlesReportCSV,
-    serve_protected_file,
+    serve_protected_file, ArticleAttachmentUploadView,
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -40,6 +40,7 @@ urlpatterns = [
     # Обслуживание защищенных файлов (должен поддерживать GET, но не вмешиваться в POST админки)
     path('protected-file/<path:file_path>/', serve_protected_file, name='serve_protected_file'),
     # Отчеты
+    path('articles/upload/', ArticleAttachmentUploadView.as_view(), name='articles_upload'),
     path('reports/articles/', ArticlesReportJSON.as_view(), name='articles_report_json'),
     path('reports/articles.csv', ArticlesReportCSV.as_view(), name='articles_report_csv'),
 ]

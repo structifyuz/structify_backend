@@ -2,3 +2,8 @@ media/
 static/
 db.sqlite3
 .venv/
+*.log
+*.pot
+*.pyc
+pycache/
+.idea
