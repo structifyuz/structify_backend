@@ -1,6 +1,6 @@
 import re
 
-from myapp.models import ArticleFileAttachment
+from articles.models import ArticleFileAttachment
 
 
 def mark_article_attachment_files_as_used(content):

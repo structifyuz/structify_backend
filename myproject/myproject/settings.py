@@ -7,13 +7,18 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # --- BASE ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- SECURITY ---
-SECRET_KEY = 'django-insecure-wiell9!0-xchf29izwd_q07f^w8n+&dv-$ijd31n+kox50-en2'  # перемести в .env на проде
+SECRET_KEY = 'django-insecure-wiell9!0-xchf29izwd_q07f^w8n+&dv-$ijd31n+kox50-en2'
 DEBUG = True
-ALLOWED_HOSTS = ["*"]  # сузить на проде
+ALLOWED_HOSTS = ["*"]
+AUTH_USER_MODEL = "users.User"
 CORS_ALLOW_ALL_ORIGINS=True
 
 # --- APPS ---
@@ -27,11 +32,15 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework',
      "corsheaders",
-    # JWT (не обязательно включать blacklist, но можно)
     # 'rest_framework_simplejwt.token_blacklist',
-    'myapp',
     'ckeditor',
-    'ckeditor_uploader',  # Добавляем для поддержки загрузки файлов
+    'ckeditor_uploader',
+    'django_filters',
+
+    # Project Apps
+    'users',
+    'books',
+    'articles',
 ]
 
 # --- DRF / AUTH ---
@@ -89,9 +98,13 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 # --- DATABASE ---
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("DB_USER", "user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 
@@ -127,12 +140,12 @@ CKEDITOR_CONFIGS = {
         'height': 400,
         'width': '100%',
         'extraPlugins': ','.join([
-            'uploadimage',  # Поддержка загрузки изображений
-            'codesnippet',  # Поддержка вставки кода
+            'uploadimage',
+            'codesnippet',
         ]),
         'filebrowserUploadUrl': '/ckeditor/upload/',
     },
 }
 
 # --- CKEDITOR UPLOADER ---
-CKEDITOR_UPLOAD_PATH = 'uploads/'  # Путь для загружаемых файлов относительно MEDIA_ROOT
+CKEDITOR_UPLOAD_PATH = 'uploads/'

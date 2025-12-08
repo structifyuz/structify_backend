@@ -14,7 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API endpoints
-    path('api/', include('myapp.urls')),
+    path('api/', include('myproject.api_urls')),
 
     # CKEditor uploader
     path('ckeditor/', include('ckeditor_uploader.urls')),  # Добавляем маршруты для загрузки файлов CKEditor
