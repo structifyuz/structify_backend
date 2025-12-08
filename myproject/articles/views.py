@@ -13,7 +13,7 @@ from articles.models import ArticleFileAttachment, Article, ArticleSubCategory, 
 from articles.serializers import ArticleSerializer, ArticleCategorySerializer, ArticleSubCategorySerializer
 from articles.services import mark_article_attachment_files_as_used
 from base.api_views import DefaultPagination
-from structify_backend.utils.drf_spectacular_utils import ordering_parameter
+from utils.drf_spectacular_utils import ordering_parameter
 
 
 class ArticleCategoryViewSet(viewsets.ModelViewSet):

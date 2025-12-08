@@ -8,7 +8,7 @@ from base.api_views import MultiSerializerViewSetMixin, DefaultPagination
 from base.helpers import extract_first_page_of_pdf_as_image
 from books.models import Book, BookCategory, BookSubCategory
 from books.serializers import BookSerializer, BookCreateSerializer, BookCategorySerializer, BookSubCategorySerializer
-from structify_backend.utils.drf_spectacular_utils import ordering_parameter
+from utils.drf_spectacular_utils import ordering_parameter
 
 
 class BookCategoryViewSet(viewsets.ModelViewSet):
