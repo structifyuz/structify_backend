@@ -29,7 +29,7 @@ class ArticleSubCategoryViewSet(viewsets.ModelViewSet):
 
 @extend_schema(parameters=[ordering_parameter(['created_at', 'title'])])
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.select_related("category", "author").all().order_by("-created_at")
+    queryset = Article.objects.select_related("sub_category", "author").all().order_by("-created_at")
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = DefaultPagination
