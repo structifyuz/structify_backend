@@ -10,6 +10,7 @@ class ArticleCategory(models.Model):
     def __str__(self):
         return self.name
 
+
 class ArticleSubCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(ArticleCategory, on_delete=models.CASCADE)
@@ -29,9 +30,13 @@ def article_upload_to(instance, filename: str) -> str:
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    author = models.ForeignKey("users.User", on_delete=models.CASCADE)
     sub_category = models.ForeignKey(
-        ArticleSubCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles"
+        ArticleSubCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="articles",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -41,7 +46,7 @@ class Article(models.Model):
 
 
 class ArticleFileAttachment(models.Model):
-    file = models.FileField(upload_to='article_attachments/')
+    file = models.FileField(upload_to="article_attachments/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     used = models.BooleanField(default=False)
 
